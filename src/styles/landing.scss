@@ -1,0 +1,31 @@
+.hidden{
+  display: none;
+}
+
+video {
+  width: 100%    !important;
+  height: auto   !important;
+}
+.AppContainer{
+  padding-top: 1vh;
+  .overlay--container{
+    width: 90%;
+    margin:0 auto;
+    position: relative;
+    &__markers{
+      width: 10px;
+      height: 10px;
+      background: #000;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+    .crosshair--overlay {
+      border: 0.25em solid;
+      position: absolute;
+      height: 83%;
+      width: 90%;
+      margin: 4% 5%;
+    }
+  }
+}
