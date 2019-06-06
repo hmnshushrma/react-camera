@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NameCard from './views/landing'
+// import NameCard from './views/landing'
 import PreLanding from './views/prelanding'
 
 class App extends Component {

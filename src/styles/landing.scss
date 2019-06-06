@@ -2,16 +2,59 @@
   display: none;
 }
 
-video {
-  width: 100%    !important;
-  height: auto   !important;
+.video--container {
+  width: 80%;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+  video{
+    width: 100%;
+    height: auto;
+  }
 }
 .AppContainer{
+  .imagePreview{
+    width: 100%;
+  }
   padding-top: 1vh;
+  .capture{
+    background: #67b9ff;
+    color: #fff;
+    font-size: 2em;
+    padding: 15px 30px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 6px;
+  }
   .overlay--container{
-    width: 90%;
-    margin:0 auto;
-    position: relative;
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    margin: 2% 2.8%;
+    .top, .bottom {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+    }
+    .top {
+      top: 0;
+      border-top: 3px solid #fff;
+    }
+    .bottom {
+      bottom: 7px;
+      border-bottom: 3px solid #fff;
+    }
+    .left {
+      left: 0;
+      border-left: 3px solid #fff;
+    }
+    .right {
+      right: 0;
+      border-right: 3px solid #fff;
+    }
     &__markers{
       width: 10px;
       height: 10px;
@@ -21,11 +64,11 @@ video {
       left: 0px;
     }
     .crosshair--overlay {
-      border: 0.25em solid;
+      border: 0.25em solid #fff;
       position: absolute;
-      height: 83%;
+      height: 80%;
       width: 90%;
-      margin: 4% 5%;
+      margin: 4%;
     }
   }
 }

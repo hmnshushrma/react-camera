@@ -8,7 +8,7 @@ class PreLanding extends Component {
     this.videoStream = React.createRef()
     this.captureImage = React.createRef()
     this.canvas = React.createRef()
-    this.imagePreview = React.createRef()
+    // this.imagePreview = React.createRef()
     this.capturePicture = this.capturePicture.bind(this)
   }
   componentDidMount() {
@@ -40,18 +40,33 @@ class PreLanding extends Component {
 
   render() {
     const { imgUrl } = this.state
+    let imageTag
+    if (imgUrl) {
+      imageTag = <img src={imgUrl} className="imagePreview" alt="description" />
+    } else {
+      imageTag = <p>not captured</p>
+    }
+
     return (
       <div className="AppContainer">
-        <div className="overlay--container">
-          <div className="crosshair--overlay" />
-          <video ref={this.videoStream} autoPlay />
+        <div className="video--container">
+          <div className="overlay--container">
+            <div class="top left" />
+            <div class="top right" />
+            <div class="bottom right" />
+            <div class="bottom left" />
+          </div>
+          <video ref={this.videoStream} autoPlay preload="none" />
         </div>
-
-        <button ref={this.captureImage} onClick={this.capturePicture}>
+        <button
+          ref={this.captureImage}
+          onClick={this.capturePicture}
+          className="capture"
+        >
           Capture
         </button>
         <canvas ref={this.canvas} width="640" height="480" className="hidden" />
-        <img rev={this.imagePreview} src={imgUrl} className="imagePreview" />
+        {imageTag}
       </div>
     )
   }
