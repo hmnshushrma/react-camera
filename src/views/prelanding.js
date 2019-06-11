@@ -10,20 +10,58 @@ class PreLanding extends Component {
     this.canvas = React.createRef()
     // this.imagePreview = React.createRef()
     this.capturePicture = this.capturePicture.bind(this)
+    this.onInputSelect = this.onInputSelect.bind(this)
   }
+
   componentDidMount() {
     this.playVideo()
   }
-  playVideo = () => {
+
+  getCameraDevices = async () => {
+    const nativeDevices = await navigator.mediaDevices.enumerateDevices()
+    const videoDevices = nativeDevices.filter(
+      device => device.kind === 'videoinput'
+    )
+    return videoDevices
+  }
+
+  onInputSelect = (e, args) => {
+    this.setState({ selectedDevice: e.target.value })
+    this.playVideo()
+  }
+
+  playVideo = async () => {
+    let deviceAvaliable = await this.getCameraDevices()
     const videoPlayer = this.videoStream.current
-    const constraints = {
-      video: true
-    }
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        videoPlayer.srcObject = stream
-        videoPlayer.play()
-      })
+    const { selectedDevice } = this.state
+    console.log(selectedDevice, 'selectedDevice')
+
+    if (deviceAvaliable) {
+      this.setState({ sources: deviceAvaliable })
+
+      // let devices = deviceAvaliable.map(dev => {
+      //   return dev.deviceId
+      // })
+      const videoConstraints = {}
+      if (selectedDevice === '' || typeof selectedDevice === 'undefined') {
+        videoConstraints.facingMode = 'environment'
+      } else {
+        videoConstraints.deviceId = { exact: selectedDevice }
+        videoConstraints.width = 400
+        videoConstraints.height = 600
+      }
+
+      const constraints = {
+        video: videoConstraints,
+        audio: false
+      }
+      console.log(videoConstraints)
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+          videoPlayer.srcObject = stream
+          videoPlayer.play()
+        })
+      }
     }
   }
   capturePicture = () => {
@@ -39,12 +77,27 @@ class PreLanding extends Component {
   }
 
   render() {
-    const { imgUrl } = this.state
+    const { imgUrl, sources } = this.state
+    // let sources = ''
     let imageTag
     if (imgUrl) {
       imageTag = <img src={imgUrl} className="imagePreview" alt="description" />
     } else {
       imageTag = <p>not captured</p>
+    }
+    let optionItems
+    if (sources) {
+      optionItems = sources.map(device => (
+        <option key={device.groupId} value={device.deviceId}>
+          {device.label}
+        </option>
+      ))
+    } else {
+      optionItems = (
+        <option value="volvo" disabled>
+          No Camera Device Found
+        </option>
+      )
     }
 
     return (
@@ -65,8 +118,13 @@ class PreLanding extends Component {
         >
           Capture
         </button>
+
         <canvas ref={this.canvas} width="640" height="480" className="hidden" />
         {imageTag}
+
+        <select value={this.state.value} onClick={this.onInputSelect}>
+          {optionItems}
+        </select>
       </div>
     )
   }
