@@ -67,3 +67,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 # react-camera
+
+
+#references https://www.twilio.com/blog/2018/04/choosing-cameras-javascript-mediadevices-api.html
